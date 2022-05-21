@@ -1,0 +1,158 @@
+{% extends 'basecamp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="Title" xmlns="http://www.w3.org/1999/html">
+        <h1>{{ title }}</h1>
+    </div>
+
+    <div class="project-list">
+
+        <div class="project-list-content">
+            <div class="project-column-name">
+                <div style="margin-right:5px">
+                    <img src="{% static 'basecamp/images/white_star.png' %}" width="14" height="14"/>
+                </div>
+                All projects
+            </div>
+            {% for project in project_list %}
+            <div class="project">
+                <div class="project-title">
+                    <div class="project-title-section">
+                        <div>
+                            <a href="{% url 'basecamp:detail' project.0.id%}" style="text-decoration:none; color:white">{{ project.0.title|truncatechars:19 }}</a>
+                        </div>
+                        <div style="padding-top:3px">
+                            <a href="{% url 'basecamp:edit_project' project.0.id %}">
+                                <img src="{% static 'basecamp/images/white-settings-icon-0.jpg' %}" width="16" height="16"/>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-title-section-bottom">
+                        <div><img src="{% static 'basecamp/images/white-pencil.png' %}" width="16" height="16"/></div>
+                        <div style="padding-left:5px">{{ project.0.created_by }}</div>
+                    </div>
+                </div>
+                <div class="project-description">
+                    {{ project.0.description|truncatechars:60 }}
+                </div>
+                <div class="project-info">
+                    <div class="project-info-items">
+                        <div class="project-info-items">
+                            <img src="{% static 'basecamp/images/members5.webp' %}" width="16" height="16"/>
+                            <div class="project-info-numbers">{{ project.1 }}</div>
+                        </div>
+                        <div class="project-info-items">
+                            <img src="{% static 'basecamp/images/messages1.webp' %}" width="16" height="16"/>
+                            <div class="project-info-numbers">{{ project.2 }}</div>
+                        </div>
+                    </div>
+                    <div class="project-info-items">
+                        <a href="{% url 'basecamp:delete_project' project.0.id %}">
+                            <img src="{% static 'basecamp/images/white_basket7.png' %}" width="20" height="20" style="background: None"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="project-list-content">
+            <div class="project-column-name">
+                <div style="margin-right:5px">
+                    <img src="{% static 'basecamp/images/white-pencil.png' %}" width="14" height="14"/>
+                </div>
+                Created by me
+            </div>
+            {% for project in my_project_list %}
+            <div class="project">
+                <div class="project-title">
+                    <div class="project-title-section">
+                        <div>
+                            <a href="{% url 'basecamp:detail' project.0.id%}" style="text-decoration:none; color:white">{{ project.0.title|truncatechars:19 }}</a>
+                        </div>
+                        <div style="padding-top:3px">
+                            <a href="{% url 'basecamp:edit_project' project.0.id %}">
+                                <img src="{% static 'basecamp/images/white-settings-icon-0.jpg' %}" width="16" height="16"/>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-title-section-bottom">
+                        <div><img src="{% static 'basecamp/images/white-pencil.png' %}" width="16" height="16"/></div>
+                        <div style="padding-left:5px">{{ project.0.created_by }}</div>
+                    </div>
+                </div>
+                <div class="project-description">
+                    {{ project.0.description|truncatechars:60 }}
+                </div>
+                <div class="project-info">
+                    <div class="project-info-items">
+                        <div class="project-info-items">
+                            <img src="{% static 'basecamp/images/members5.webp' %}" width="16" height="16"/>
+                            <div class="project-info-numbers">{{ project.1 }}</div>
+                        </div>
+                        <div class="project-info-items">
+                            <img src="{% static 'basecamp/images/messages1.webp' %}" width="16" height="16"/>
+                            <div class="project-info-numbers">{{ project.2 }}</div>
+                        </div>
+                    </div>
+                    <div class="project-info-items">
+                        <a href="{% url 'basecamp:delete_project' project.0.id %}">
+                            <img src="{% static 'basecamp/images/white_basket7.png' %}" width="20" height="20" style="background: None"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="project-list-content">
+            <div class="project-column-name">
+                <div style="margin-right:5px"><img src="{% static 'basecamp/images/members5.webp' %}" width="14" height="14"/>
+                </div>
+                Shared with me
+            </div>
+            {% for project in shared_project_list %}
+            <div class="project">
+                <div class="project-title">
+                    <div class="project-title-section">
+                        <div>
+                            <a href="{% url 'basecamp:detail' project.0.id%}" style="text-decoration:none; color:white">{{ project.0.title|truncatechars:19 }}</a>
+                        </div>
+                        <div style="padding-top:3px">
+                            <a href="{% url 'basecamp:edit_project' project.0.id %}">
+                                <img src="{% static 'basecamp/images/white-settings-icon-0.jpg' %}" width="16" height="16"/>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-title-section-bottom">
+                        <div><img src="{% static 'basecamp/images/white-pencil.png' %}" width="16" height="16"/></div>
+                        <div style="padding-left:5px">{{ project.0.created_by }}</div>
+                    </div>
+                </div>
+                <div class="project-description">
+                    {{ project.0.description|truncatechars:60 }}
+                </div>
+                <div class="project-info">
+                    <div class="project-info-items">
+                        <div class="project-info-items">
+                            <img src="{% static 'basecamp/images/members5.webp' %}" width="16" height="16"/>
+                            <div class="project-info-numbers">{{ project.1 }}</div>
+                        </div>
+                        <div class="project-info-items">
+                            <img src="{% static 'basecamp/images/messages1.webp' %}" width="16" height="16"/>
+                            <div class="project-info-numbers">{{ project.2 }}</div>
+                        </div>
+                    </div>
+                    <div class="project-info-items">
+                        <a href="{% url 'basecamp:delete_project' project.0.id %}">
+                            <img src="{% static 'basecamp/images/white_basket7.png' %}" width="20" height="20" style="background: None"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}

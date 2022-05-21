@@ -1,0 +1,22 @@
+{% extends 'basecamp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="Title">
+        <h1>{{ title }}</h1>
+    </div>
+    <div class="Title">
+        <img src="{% static 'basecamp/images/logo_basecamp.webp' %}" width="500" height="400" alt="Basecamp">
+    </div>
+
+    <div class="form">
+        <form method="POST">
+            {% csrf_token %}
+            {% for f in form %}
+            <div class="form-items"><p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label></p><p>{{ f }}</div>
+            <div class="form-error">{{ f.errors }}</div>
+            {% endfor %}
+            <button class="button1" type="submit"> Confirm </button>
+        </form>
+    </div>
+{% endblock %}

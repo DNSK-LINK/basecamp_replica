@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ title }}</title>
+    <link type="text/css" href="{% static 'basecamp/css/styles.css' %}" rel="stylesheet" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+    <body>
+        {% if user.is_authenticated %}
+        <div class="header">
+            <div><a href="{% url 'basecamp:home' %}">
+                <img src="{% static 'basecamp/images/logo_basecamp.webp' %}" width="80" height="60" alt="Basecamp">
+            </a></div>
+            <div class="menu">
+            <a href="{% url 'basecamp:create_project' %}" style="text-decoration:none">
+                <div class="menu-items">
+                <div style="margin-right:5px"><img src="{% static 'basecamp/images/add.png' %}" width="14" height="14"/></div>
+                <div style="margin-left:5px">Add Project</div>
+                </div>
+            </a>
+            <a href="{% url 'basecamp:project' %}" style="text-decoration:none">
+                <div class="menu-items">
+                    <img src="{% static 'basecamp/images/file.png' %}" width="16" height="16"/>
+                    <div style="margin-left:5px">My Projects</div>
+                </div>
+            </a>
+            <a href="{% url 'basecamp:userinfo' user.id %}" style="text-decoration:none">
+                <div class="menu-items">
+                    <img src="{% static 'basecamp/images/black-settings.png' %}" width="16" height="16"/>
+                    <div style="margin-left:5px">Edit Profile</div>
+                </div>
+            </a>
+            <a href="{% url 'basecamp:logout' %}" style="text-decoration:none">
+                <div class="menu-items">
+                    <img src="{% static 'basecamp/images/logout.png' %}" width="16" height="16"/>
+                    <div style="margin-left:5px">Log Out</div>
+                </div>
+            </a>
+            </div>
+        </div>
+        {% endif %}
+
+            <div class="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+
+    </body>
+</html>

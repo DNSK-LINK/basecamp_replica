@@ -1,0 +1,76 @@
+{% extends 'basecamp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="Title">
+        <h1>{{ title }}</h1>
+    </div>
+    <div class="detail">
+        <div class="detail-edit-project">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div><input type="hidden" name="project_pk" value="{{ pk }}"></div>
+
+                     <div class="form" style="flex-direction:row; justify-content:space-between; align-items:flex-end">
+                    <div class="form" style="justify-content:flex-start; align-items:flex-start">
+                        <label style="margin-bottom:10px" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="form-error">{{ form.title.errors }}</div>
+                    <button class="button1" type="submit" name="option" value="Update_name"> Update name </button>
+                    </div>
+                </form>
+
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form" style="flex-direction:row; justify-content:space-between; align-items:flex-end">
+                    <div class="form" style="justify-content:flex-start; align-items:flex-start">
+                        <label style="margin-bottom:10px" for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                        {{ form.description }}
+                    </div>
+                    <div class="form-error">{{ form.description.errors }}</div>
+
+                    <div><input type="hidden" name="project_pk" value="{{ pk }}"></div>
+
+                    <button class="button1" type="submit" name="option" value="Update_description"> Update description </button>
+                    </div>
+                </form>
+
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="project_pk" value="{{ pk }}">
+                    <div class="form" style="flex-direction:row; justify-content:space-between; align-items:flex-end">
+                        <div class="form" style="justify-content:flex-start; align-items:flex-start">
+                            <div>{{ form.member.errors }}</div>
+                            <label style="margin-bottom:10px" for="{{ form.member.id_for_label }}">Add member (username)</label>
+                            {{ form.member }}
+
+                        </div>
+
+                        <div class="form" style="flex-direction:row">
+                            <label style="margin-right:30px" for="{{ form.admin.id_for_label }}">{{ form.admin.label }}</label>
+                            {{ form.admin }}
+                        </div>
+                        <input class="button1" type="submit" name="option" value="Add">
+                    </div>
+                </form>
+
+        </div>
+
+        <div class="detail-menu" style="margin-left:150px">
+            <div class="button3" style="background:rgb(200,200,200)">
+                <div style="margin-right:5px"><img src="{% static 'basecamp/images/black-settings.png' %}" width="14" height="14"/></div>
+                <div>Edit project</div>
+            </div>
+
+
+            <a href="{% url 'basecamp:home' %}" style="text-decoration:none"><div class="button3" style="background:none">
+                <div style="margin-right:5px"><img src="{% static 'basecamp/images/black_basket.png' %}" width="14" height="14"/></div>
+                <div>Delete project</div>
+            </div></a>
+        </div>
+    </div>
+{% endblock %}

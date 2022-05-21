@@ -1,0 +1,186 @@
+{% extends 'basecamp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+        <div class="Title" xmlns="http://www.w3.org/1999/html">
+            <div style="font-size:30px">{{ title }}</div>
+        </div>
+
+            <div class="project-column-name" style="background:None">
+                <div style="margin-right:5px"><img src="{% static 'basecamp/images/Black_pen.png' %}" width="14" height="14"/></div>
+                Created by: {{ creator }}
+            </div>
+
+
+    <div class="detail">
+
+        <div class="detail-content">
+            <div>
+                {{ project.description }}
+            </div>
+
+
+            <p>Members:</p>
+            <div class="detail-members">
+                {% for member in members %}
+                    {% if member == creator %}
+                        <div><img src="{% static 'basecamp/images/Black_pen.png' %}" width="14" height="14"/></div>
+                    {% endif %}
+                    {% if forloop.last %}
+                        <div style="margin-left:5px">{{ member }}.</div>
+                    {% else %}
+                        <div style="margin-left:5px">{{ member }},</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div>
+                <p>Add new discussion</p>
+                <div>
+                    <form class="form-detail-discussion" action="{% url 'basecamp:add_info_project_detail' pk %}" method="post">
+                        {% csrf_token %}
+                        <textarea name="title" rows="2" cols="80"></textarea>
+                        <input type="hidden" name="project_pk" value="{{ pk }}">
+                        {% if user_admin %}
+                            <button class="button2" type="submit" name="option" value="Add discussion">
+                                <div style="margin-right:5px"><img src="{% static 'basecamp/images/add.png' %}" width="14" height="14"/></div>
+                                <div>Add discussion</div>
+                            </button>
+                        {% else %}
+                            <div class="button2">
+                                <div style="margin-right:5px"><img src="{% static 'basecamp/images/add.png' %}" width="14" height="14"/></div>
+                                <div>Add discussion</div>
+                            </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+
+            <div> {% for discussion in discussions %}
+                <div class="detail-discussion">
+
+                    <div class="detail-discussion-title">
+                        <div style="margin-left:20px">Discussion: {{ discussion.disc_name }}</div>
+                        <div style="margin-right:5px">
+                            <img style="margin-right:5px" src="{% static 'basecamp/images/black-settings.png' %}" width="16" height="16"/>
+                            <img style="margin-right:5px" src="{% static 'basecamp/images/black_basket.png' %}" width="16" height="16"/>
+                        </div>
+                    </div>
+
+                        {% for message in messages %}
+                            <div class="detail-discussion-message">
+                            {% if message.related_discussion == discussion.id %}
+                                <div style="display:flex; flex-direction:row">
+                                <div style="margin-right:5px">{{ message.user }}:</div>
+                                <div>{{ message.message_text }}</div>
+                                </div>
+                                <div><img src="{% static 'basecamp/images/Black_pen.png' %}" width="16" height="16"/></div>
+                            {% endif %}
+                            </div>
+                        {% endfor %}
+
+                    <div class="detail-discussion-bottom">
+                        <form class="form-detail-discussion" style="margin-left:20px; justify-content:space-between" action="{% url 'basecamp:add_info_project_detail' pk %}" method="post">
+                            {% csrf_token %}
+                            <textarea name="title" rows="2" cols="130"></textarea>
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
+                            <input type="hidden" name="discussion_id" value="{{ discussion.id }}">
+                            <input type="hidden" name="project_pk" value="{{ pk }}">
+                            <button class="button2" type="submit" name="option" style="width:80px" value="Send">Send</button>
+                        </form>
+                    </div>
+                    </div>
+
+                    {% endfor %}
+
+
+        </div>
+
+        <div>
+            <p>Add new task</p>
+            <div>
+                <form class="form-detail-discussion" action="{% url 'basecamp:add_info_project_detail' pk %}" method="post">
+                    {% csrf_token %}
+                    <textarea name="title" rows="2" cols="80"></textarea>
+                    <input type="hidden" name="project_pk" value="{{ pk }}">
+                    {% if user_admin %}
+                    <button class="button2" type="submit" name="option" value="Add new task">
+                        <div style="margin-right:5px"><img src="{% static 'basecamp/images/add.png' %}" width="14" height="14"/></div>
+                        <div>Add new task</div>
+                    </button>
+                    {% else %}
+                        <div class="button2">
+                        <div style="margin-right:5px"><img src="{% static 'basecamp/images/add.png' %}" width="14" height="14"/></div>
+                        <div>Add new task</div>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+            <div>
+                <p>Tasks:</p>
+                {% for task in tasks %}
+                    <p>{{ task }}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div>
+            <p>Add attachments</p>
+            <div>
+                <form class="form-detail-discussion" action="{% url 'basecamp:add_info_project_detail' pk %}" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    <input type="file" name="file">
+                    <input type="hidden" name="title" value="2">
+                    <input type="hidden" name="project_pk" value="{{ pk }}">
+                    {% if user_admin %}
+                    <button class="button2" type="submit" name="option" value="Add attachment">
+                        <div style="margin-right:5px"><img src="{% static 'basecamp/images/add.png' %}" width="14" height="14"/></div>
+                        <div>Add attachments</div>
+                    </button>
+                    {% else %}
+                       <div class="button2">
+                        <div style="margin-right:5px"><img src="{% static 'basecamp/images/add.png' %}" width="14" height="14"/></div>
+                        <div>Add attachments</div>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+            <div>
+                {% for file in files %}
+                    <p>{{ file }}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        </div>
+
+        <div class="detail-menu">
+            <div class="button3" style="background:rgb(200,200,200)">
+                <div style="margin-right:5px"><img src="{% static 'basecamp/images/black-settings.png' %}" width="14" height="14"/></div>
+                <div>Project details</div>
+            </div>
+            <a href="{% url 'basecamp:edit_project' pk %}" style="text-decoration:none"><div class="button3">
+                <div style="margin-right:5px"><img src="{% static 'basecamp/images/black-settings.png' %}" width="14" height="14"/></div>
+                <div>Edit project</div>
+            </div></a>
+            <a href="{% url 'basecamp:membership' pk %}" style="text-decoration:none"><div class="button3">
+                <div style="margin-right:5px"><img src="{% static 'basecamp/images/black_members1.png' %}" width="16" height="16"/></div>
+                <div>Members</div>
+            </div></a>
+            <a href="{% url 'basecamp:home' %}" style="text-decoration:none"><div class="button3">
+                <div style="margin-right:5px"><img src="{% static 'basecamp/images/topic.png' %}" width="14" height="14"/></div>
+                <div>Topics</div>
+            </div></a>
+            <a href="{% url 'basecamp:home' %}" style="text-decoration:none"><div class="button3">
+                <div style="margin-right:5px"><img src="{% static 'basecamp/images/task.png' %}" width="14" height="14"/></div>
+                <div>Tasks</div>
+            </div></a>
+            <a href="{% url 'basecamp:home' %}" style="text-decoration:none"><div class="button3">
+                <div style="margin-right:5px"><img src="{% static 'basecamp/images/file.png' %}" width="14" height="14"/></div>
+                <div>Attachments</div>
+            </div></a>
+        </div>
+
+    </div>
+
+{% endblock %}

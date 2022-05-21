@@ -1,0 +1,34 @@
+{% extends 'basecamp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="Title">
+        <h1>{{ title }}</h1>
+    </div>
+    <div class="Title">
+        <img src="{% static 'basecamp/images/logo_basecamp.webp' %}" width="500" height="400" alt="Basecamp">
+    </div>
+
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+    <div class="form">
+        <form method="post" action="{% url 'basecamp:login' %}">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td><p>{{ form.username.label_tag }}</td>
+                    <td><p>{{ form.username }}</td>
+                </tr>
+                <tr>
+                    <td><p>{{ form.password.label_tag }}</td>
+                    <td><p>{{ form.password }}</td>
+                </tr>
+            </table>
+            <button class="button1" type="submit">Login</button>
+            <input type="hidden" name="next" value="{% url 'basecamp:project' %}">
+        </form>
+    </div>
+
+{% endblock %}

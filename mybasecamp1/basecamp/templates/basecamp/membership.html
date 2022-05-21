@@ -1,0 +1,57 @@
+{% extends 'basecamp/base.html' %}
+
+{% block content %}
+
+    <div class="Title" xmlns="http://www.w3.org/1999/html">
+        <div style="font-size:30px">{{ title }}</div>
+    </div>
+
+    <div class="detail-content">
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div>
+                {{ form.user.errors }}
+                <label style="font-size:18px" for="{{ form.user.id_for_label }}">Username:</label>
+                <p>{{ form.user }}</p>
+                <input type="hidden" name="project_pk" value="{{ pk }}">
+            </div>
+            <input class="button" type="submit" name="option" value="Add user">
+        </form>
+
+        <div>
+
+            <h3>Members list</h3>
+            <form method="post">
+                {% csrf_token %}
+            <select class="user-select" name="user" size="10" multiple="multiple">
+                {% for member in members %}
+                    <option value="{{ member }}">{{ member }}</option>
+                {% endfor %}
+
+            </select>
+                <input type="hidden" name="project_pk" value="{{ pk }}">
+                <input class="button" style="margin-left:10px" type="submit" name="option" value="Add to admins">
+                <input class="button" style="margin-left:10px" type="submit" name="option" value="Delete user">
+            </form>
+
+        </div>
+
+        <div>
+            <h3>Admins list</h3>
+            <form method="post">
+                {% csrf_token %}
+            <select class="user-select" name="user" size="10" multiple="multiple">
+                {% for admin in admins %}
+                    <option value="{{ admin }}">{{ admin }}</option>
+                {% endfor %}
+            </select>
+                <input type="hidden" name="project_pk" value="{{ pk }}">
+                <input class="button" style="margin-left:10px" type="submit" name="option" value="Delete from admins">
+            </form>
+        </div>
+
+    </div>
+
+{% endblock %}
